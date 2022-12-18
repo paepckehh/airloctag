@@ -50,30 +50,30 @@ func getCoord() (lat, long, elevation float64, empty bool, err error) {
 	x = os.Getenv(_ENV_LAT)
 	if x == "" {
 		err = errors.New(_ERR_MISSING + _ENV_LAT)
-		return lat, long, elevation, err
+		return lat, long, elevation, empty, err
 	}
 	empty = false
 	lat, err = strconv.ParseFloat(x, 64)
 	if err != nil {
 		err = errors.New(_ERR_INVALID + _ENV_LAT + " [" + err.Error() + "]")
-		return lat, long, elevation, err
+		return lat, long, elevation, empty, err
 	}
 	x = os.Getenv(_ENV_LONG)
 	if x == "" {
 		err = errors.New(_ERR_MISSING + _ENV_LONG)
-		return lat, long, elevation, err
+		return lat, long, elevation, empty, err
 	}
 	long, err = strconv.ParseFloat(x, 64)
 	if err != nil {
 		err = errors.New(_ERR_INVALID + _ENV_LONG + " [" + err.Error() + "]")
-		return lat, long, elevation, err
+		return lat, long, elevation, empty, err
 	}
 	x = os.Getenv(_ENV_ELEVATION)
 	if x != "" {
 		elevation, err = strconv.ParseFloat(x, 64)
 		if err != nil {
 			err = errors.New(_ERR_INVALID + _ENV_ELEVATION + " [" + err.Error() + "]")
-			return lat, long, elevation, err
+			return lat, long, elevation, empty, err
 		}
 	}
 	return lat, long, elevation, false, nil
@@ -85,17 +85,17 @@ func getIata() (lat, long, elevation float64, empty bool, err error) {
 	empty = true
 	if x == "" {
 		err = errors.New(_ERR_MISSING + _ENV_IATA)
-		return lat, long, elevation, err
+		return lat, long, elevation, empty, err
 	}
 	empty = false
 	if len(x) != 3 {
 		err = errors.New(_ERR_INVALID + _ENV_IATA)
-		return lat, long, elevation, err
+		return lat, long, elevation, empty, err
 	}
 	loc, ok := airports.Airports[x]
 	if !ok {
 		err = errors.New(_ERR_INVALID + _ENV_IATA)
-		return lat, long, elevation, err
+		return lat, long, elevation, empty, err
 	}
 	return loc.A, loc.O, loc.L, false, nil
 }
