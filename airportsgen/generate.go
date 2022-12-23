@@ -1,4 +1,4 @@
-// package main ...
+// package main airportsgen 
 package main
 
 // import
@@ -14,7 +14,6 @@ import (
 	"github.com/klauspost/compress/zstd"
 )
 
-// const
 const (
 
 	// files
@@ -22,14 +21,13 @@ const (
 	_file_out_nativ = "../airports/airports.go"
 
 	// components
-	_header_nativ    = "// Code generated : IATA Airport gps coords as embedded golang map - DO NOT EDIT: "
+	_header_nativ    = "//package airports\n// Code generated : IATA Airport gps coords as embedded golang map - DO NOT EDIT: "
 	_package_nativ   = "package airports\n\n"
 	_map_start_nativ = "// Airports ... \nvar Airports = map[string]Coord{\n"
 	_map_end         = "}\n"
 	_type_nativ      = "// Coord ...\ntype Coord struct {\n\tA float64 // Latitude\n\tO float64 // Longitude\n\tL float64 // Elevation\n}\n\n"
 )
 
-// main ...
 func main() {
 	// global
 	t0 := time.Now()
@@ -116,12 +114,10 @@ func main() {
 // LITTLE HELPER
 //
 
-// out ...
 func out(message string) {
 	os.Stdout.Write([]byte(message + "\n"))
 }
 
-// outSkip ...
 func outSkip(reason, line string) {
 	if len(line) > 80 {
 		line = line[:79] + "..."
@@ -129,12 +125,10 @@ func outSkip(reason, line string) {
 	out("skipping line " + reason + line)
 }
 
-// fl ...
 func fl(in float64) string {
 	return strconv.FormatFloat(in, 'f', -1, 64)
 }
 
-// getFileScanner ...
 func getFileScanner(filename string) (s *bufio.Scanner) {
 	f, err := os.Open(filename)
 	if err != nil {
