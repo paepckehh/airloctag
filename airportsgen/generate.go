@@ -1,4 +1,4 @@
-// package main airportsgen 
+// package main airportsgen
 package main
 
 // import
