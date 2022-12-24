@@ -1,7 +1,6 @@
 // package locenv
 package locenv
 
-// import
 import (
 	"errors"
 	"os"
@@ -10,7 +9,6 @@ import (
 	"paepcke.de/airloctag/airports"
 )
 
-// const
 const (
 	// env variable name definitions
 	_ENV_LAT       = "GPS_LAT"
@@ -29,11 +27,11 @@ const (
 // Get ...
 func Get() (lat, long, elevation float64, err error) {
 	var empty bool
-	lat, long, elevation, empty, err = getCoord()
+	lat, long, elevation, empty, err = getIata()
 	if empty {
-		lat, long, elevation, empty, err = getIata()
+		lat, long, elevation, empty, err = getCoord()
 		if empty {
-			err = errors.New(_ERR_MISSING + " {any}")
+			err = errors.New(_ERR_MISSING + " {any location data via env}")
 			return lat, long, elevation, err
 		}
 	}
