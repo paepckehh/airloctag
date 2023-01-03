@@ -33,7 +33,8 @@ func main() {
 			case "--key", "-k":
 				key = o
 			case "--verbose", "-v":
-				verbose = true
+				// currently default on via debug mode
+				// verbose = true
 			case "--help", "-h":
 				out(_syntax)
 				os.Exit(0)
@@ -42,23 +43,22 @@ func main() {
 				os.Exit(1)
 			}
 		}
+	}
+	lat, long, elevation, err := locenv.Get()
+	if err != nil {
+		out("[error] [env variable provided location] [" + err.Error() + "]")
+		os.Exit(1)
+	}
+	hash, hashbase, err := airloctag.Encode(lat, long, elevation, key, precision)
+	if err != nil {
+		out("[error] [" + err.Error())
+		os.Exit(1)
+	}
+	switch verbose {
+	case true:
+		out("TAG:" + hash + "\nDEBUG:" + hashbase)
 	default:
-		lat, long, elevation, err := locenv.Get()
-		if err != nil {
-			out("[error] [env variable provided location] [" + err.Error() + "]")
-			os.Exit(1)
-		}
-		hash, hashbase, err := airloctag.Encode(lat, long, elevation, key, precision)
-		if err != nil {
-			out("[error] [" + err.Error())
-			os.Exit(1)
-		}
-		switch verbose {
-		case true:
-			out("TAG:" + hash + "\nDEBUG:" + hashbase)
-		default:
-			out("TAG:" + hash)
-		}
+		out("TAG:" + hash)
 	}
 }
 

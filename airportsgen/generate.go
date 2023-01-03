@@ -50,7 +50,10 @@ func main() {
 		}
 		content = append(content, []byte(_map_end)...)
 		size_nativ = len(content) / 1024
-		os.WriteFile(_file_out_nativ, content, 0o644)
+		err := os.WriteFile(_file_out_nativ, content, 0o644)
+		if err != nil {
+			panic("[airportgen] unable to write generated output file")
+		}
 		co.Done()
 	}()
 
