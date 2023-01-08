@@ -21,3 +21,5 @@
 Makefile
 doc
 vendor
+airloctag
+cmd/airloctag/airloctag
