@@ -8,6 +8,10 @@ worldwide IATA airports grid
 
 Use as lib, see api.go for details.
 
+# DOCS
+
+[pkg.go.dev/paepcke.de/airloctag](https://pkg.go.dev/paepcke.de/airloctag)
+
 # CONTRIBUTION
 
 Yes, Please! PRs Welcome! 
