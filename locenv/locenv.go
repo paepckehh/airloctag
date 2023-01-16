@@ -16,8 +16,8 @@ const (
 	_ENV_ELEVATION = "GPS_ELEVATION"
 	_ENV_IATA      = "IATA"
 	// error messages
-	_ERR_MISSING = "enviroment variable missing: "
-	_ERR_INVALID = "enviroment variable with invalid data: "
+	_ERR_MISSING = "environment variable missing: "
+	_ERR_INVALID = "environment variable with invalid data: "
 )
 
 //
