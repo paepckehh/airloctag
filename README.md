@@ -1,5 +1,5 @@
 # OVERVIEW
-[![Go Report Card](https://img.shields.io/badge/go%20report-A+-brightgreen.svg?style=flat)](https://goreportcard.com/report/paepcke.de/airloctag)
+[![Go Report Card](https://goreportcard.com/badge/paepcke.de/airloctag)](https://goreportcard.com/report/paepcke.de/airloctag)
 
 [paepche.de/airloctag](https://paepcke.de/airloctag/)
 
