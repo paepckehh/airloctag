@@ -1,4 +1,5 @@
 # OVERVIEW
+[![Go Report Card](https://goreportcard.com/badge/paepcke.de/airloctag)](https://goreportcard.com/report/paepcke.de/airloctag)
 
 [paepche.de/airloctag](https://paepcke.de/airloctag/)
 
