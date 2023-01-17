@@ -1,5 +1,5 @@
 # OVERVIEW
-[![Go Reference](https://pkg.go.dev/badge/paepcke.de/airloctag.svg)](https://pkg.go.dev/paepcke.de/airloctag)  [![Go Report Card](https://goreportcard.com/badge/paepcke.de/airloctag)](https://goreportcard.com/report/paepcke.de/airloctag)
+[![Go Reference](https://pkg.go.dev/badge/paepcke.de/airloctag.svg)](https://pkg.go.dev/paepcke.de/airloctag) [![Go Report Card](https://goreportcard.com/badge/paepcke.de/airloctag)](https://goreportcard.com/report/paepcke.de/airloctag) [![Go Build](https://github.com/paepckehh/airloctag/actions/workflows/golang.yml/badge.svg)](https://github.com/paepckehh/airloctag/actions/workflows/golang.yml)
 
 [paepche.de/airloctag](https://paepcke.de/airloctag/)
 
