@@ -7,7 +7,9 @@ AirLocTag is a privacy preserving location identifier hash algo,
 based on anamorph cells, formed via relative distances within the 
 worldwide IATA airports grid
 
-Use as lib, see api.go for details. No external dependencies, stdlibs only!
+* Use as lib (see api.go for details)
+* Use as app (example-app: cmd/airloctag)
+* No external dependencies, stdlibs (golang/x) only!
 
 # DOCS
 
