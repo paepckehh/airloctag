@@ -4,20 +4,21 @@ package main
 // import
 import (
 	"bufio"
+	"compress/gzip"
 	"os"
 	"runtime"
 	"strconv"
 	"strings"
 	"sync"
 	"time"
-
-	"github.com/klauspost/compress/zstd"
+	//	"github.com/klauspost/compress/zstd"
 )
 
 const (
 
 	// files
-	_file_source    = "airports.csv.zst"
+	// _file_source    = "airports.csv.zst"
+	_file_source    = "airports.csv.gz"
 	_file_out_nativ = "../airports/airports.go"
 
 	// components
@@ -137,7 +138,11 @@ func getFileScanner(filename string) (s *bufio.Scanner) {
 	if err != nil {
 		panic("unable to read db file [" + filename + "] [" + err.Error() + "]")
 	}
-	r, err := zstd.NewReader(f)
+	// 	r, err := zstd.NewReader(f)
+	// 	if err != nil {
+	// 		panic("unable to read db file [" + filename + "] [" + err.Error() + "]")
+	// 	}
+	r, err := gzip.NewReader(f)
 	if err != nil {
 		panic("unable to read db file [" + filename + "] [" + err.Error() + "]")
 	}
