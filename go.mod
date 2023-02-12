@@ -1,6 +1,6 @@
 module paepcke.de/airloctag
 
-go 1.19
+go 1.20
 
 require golang.org/x/crypto v0.6.0
 
