@@ -1,7 +1,7 @@
 # OVERVIEW
 [![Go Reference](https://pkg.go.dev/badge/paepcke.de/airloctag.svg)](https://pkg.go.dev/paepcke.de/airloctag) [![Go Report Card](https://goreportcard.com/badge/paepcke.de/airloctag)](https://goreportcard.com/report/paepcke.de/airloctag) [![Go Build](https://github.com/paepckehh/airloctag/actions/workflows/golang.yml/badge.svg)](https://github.com/paepckehh/airloctag/actions/workflows/golang.yml)
 
-[paepche.de/airloctag](https://paepcke.de/airloctag/)
+[paepcke.de/airloctag](https://paepcke.de/airloctag/)
 
 AirLocTag is a privacy preserving location identifier hash algo,
 based on anamorph cells, formed via relative distances within the 
