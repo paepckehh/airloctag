@@ -3,22 +3,19 @@ package main
 
 // import
 import (
-	"bufio"
-	"compress/gzip"
+	"encoding/csv"
 	"os"
 	"runtime"
 	"strconv"
 	"strings"
 	"sync"
 	"time"
-	//	"github.com/klauspost/compress/zstd"
 )
 
 const (
 
 	// files
-	// _file_source    = "airports.csv.zst"
-	_file_source    = "airports.csv.gz"
+	_filename       = "airport-codes.csv"
 	_file_out_nativ = "../airports/airports.go"
 
 	// components
@@ -32,7 +29,7 @@ const (
 func main() {
 	// global
 	t0 := time.Now()
-	feed_chan := make(chan string, 2000)
+	feed_chan := make(chan []string, 2000)
 	co_nativ_chan := make(chan []byte, 2000)
 
 	// collect
@@ -65,33 +62,38 @@ func main() {
 	go func() {
 		for i := 0; i < worker; i++ {
 			go func() {
-				for line := range feed_chan {
-					s := strings.Split(line, ",")
-					if len(s) < 8 {
-						outSkip("[too few number of elements]: ", line)
+				for s := range feed_chan {
+					if len(s) < 11 {
+						outSkip("[too few number of elements]: ", strings.Join(s, ","))
 						continue
 					}
-					if len(s[4]) != 5 {
+					if len(s[9]) != 3 {
+						/// fmt.Printf("not 3 letter iata code => %v\n", s[10])
 						// skip all non-iata-3-letter-code airports
-						// DEBUG ONLY: outSkip("[three letter site code]:     ", line)
+						// DEBUG ONLY: outSkip("[three letter site code]:     ", strings.Joint(s,","))
 						continue
 					}
-					lat, err := strconv.ParseFloat(s[6], 64)
+					longlat := strings.Split(s[12], ",")
+					lat, err := strconv.ParseFloat(strings.ReplaceAll(longlat[0], " ", ""), 64)
 					if err != nil {
-						outSkip("[coordinates format, lat]:       ", line)
+						outSkip("[coordinates format, lat]:       ", strings.Join(s, ","))
+						// fmt.Printf("\n%v => %v", strings.ReplaceAll(longlat[0], " ", ""), err.Error())
 						continue
 					}
-					long, err := strconv.ParseFloat(s[7], 64)
+					long, err := strconv.ParseFloat(strings.ReplaceAll(longlat[1], " ", ""), 64)
 					if err != nil {
-						outSkip("[coordinates format, long]:      ", line)
+						outSkip("[coordinates format, long]:      ", strings.Join(s, ","))
+						// fmt.Printf("\n%v => %v", strings.ReplaceAll(longlat[1], " ", ""), err.Error())
 						continue
 					}
-					elev, err := strconv.ParseFloat(s[8], 64)
+					elev, err := strconv.ParseFloat(s[3], 64)
 					if err != nil {
-						outSkip("[coordinates format, elevation]: ", line)
-						continue
+						// fmt.Printf("\n Elevation VALUE=%v ERROR:%v \n", s[3], err.Error())
+						// outSkip("[coordinates format, elevation]: ", strings.Join(s, ","))
+						// continue
+						elev = 0
 					}
-					co_nativ_chan <- []byte("\t\"" + s[4][1:4] + "\":{A:" + fl(lat) + ",O:" + fl(long) + ",L:" + fl(elev) + "},\n")
+					co_nativ_chan <- []byte("\t\"" + s[9] + "\":{A:" + fl(lat) + ",O:" + fl(long) + ",L:" + fl(elev) + "},\n")
 				}
 				bg.Done()
 			}()
@@ -101,9 +103,10 @@ func main() {
 	}()
 
 	// feeder
-	scanner, total := getFileScanner(_file_source), 0
-	for scanner.Scan() {
-		feed_chan <- scanner.Text()
+	total := 0
+	csv := readcsv(_filename)
+	for _, line := range csv {
+		feed_chan <- line
 		total++
 	}
 	close(feed_chan)
@@ -133,18 +136,14 @@ func fl(in float64) string {
 	return strconv.FormatFloat(in, 'f', -1, 64)
 }
 
-func getFileScanner(filename string) (s *bufio.Scanner) {
+func readcsv(filename string) [][]string {
 	f, err := os.Open(filename)
 	if err != nil {
 		panic("unable to read db file [" + filename + "] [" + err.Error() + "]")
 	}
-	// 	r, err := zstd.NewReader(f)
-	// 	if err != nil {
-	// 		panic("unable to read db file [" + filename + "] [" + err.Error() + "]")
-	// 	}
-	r, err := gzip.NewReader(f)
+	csv, err := csv.NewReader(f).ReadAll()
 	if err != nil {
-		panic("unable to read db file [" + filename + "] [" + err.Error() + "]")
+		panic("unable to parse db file [" + filename + "] [" + err.Error() + "]")
 	}
-	return bufio.NewScanner(r)
+	return csv
 }
