@@ -4,4 +4,4 @@ all:
 check: 
 	gofmt -w -s .
 	go vet .
-	staticcheck
+	CGO_ENABLED=0 staticcheck
